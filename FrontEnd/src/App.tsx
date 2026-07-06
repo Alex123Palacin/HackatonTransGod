@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
-import InicioPages from './assets/pages/InicioPages';
-import GuiaPages from './assets/pages/GuiaPages';
-import LoginIniciarPages from './assets/pages/LoginIniciarPages';
-import LoginRegistrarPages from './assets/pages/LoginRegistrarPages';
-import MapaPage from './assets/pages/MapaPage';
-import ScanPages from './assets/pages/ScanPages';
-import CatalogoPages from './assets/pages/CatalogoPages';
-import DescripcionAvePages from './assets/pages/DescripcionAvePages';
-import NoticiasPages from './assets/pages/NoticiasPages';
-import PublicarNoticiaPages from './assets/pages/PublicarNoticiaPages';
+import InicioPages from './pages/InicioPages';
+import GuiaPages from './pages/GuiaPages';
+import LoginIniciarPages from './pages/LoginIniciarPages';
+import LoginRegistrarPages from './pages/LoginRegistrarPages';
+import MapaPage from './pages/MapaPage';
+import ScanPages from './pages/ScanPages';
+import CatalogoPages from './pages/CatalogoPages';
+import DescripcionAvePages from './pages/DescripcionAvePages';
+import NoticiasPages from './pages/NoticiasPages';
+import PublicarNoticiaPages from './pages/PublicarNoticiaPages';
 
 function App() {
   return (
