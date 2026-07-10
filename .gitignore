@@ -45,3 +45,4 @@ staticfiles/
 # Archivos ocultos 
 .DS_Store
 Thumbs.db
+agent/
