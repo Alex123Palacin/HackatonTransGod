@@ -16,7 +16,7 @@ function MiniComunicadoComp({
   onVer,
 }: MiniComunicadoCompProps) {
   return (
-    <article className="grid w-full max-w-[262px] grid-cols-[1fr_92px] gap-3 rounded-lg border border-gray-400 bg-white p-3 font-[Arial] shadow-sm">
+    <article className="grid w-full max-w-full grid-cols-[1fr_92px] gap-3 rounded-lg border border-gray-400 bg-white p-3 font-[Arial] shadow-sm">
       <div className="flex min-w-0 flex-col">
         <span className="text-[9px] font-bold text-[#006f6c]">{categoria}</span>
         <h3 className="mt-3 text-[16px] font-bold leading-5 text-[#006f6c]">

@@ -13,7 +13,7 @@ function PasosInicio({
 }: PasosInicioProps) {
   return (
     <article
-      className={`flex w-full max-w-[230px] items-center gap-3 rounded-xl border border-gray-300 bg-white px-3 py-2 shadow-sm ${estilos}`}
+      className={`flex w-full max-w-full items-center gap-3 rounded-xl border border-gray-300 bg-white px-3 py-2 shadow-sm ${estilos}`}
     >
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-800 font-[Arial] text-sm font-bold text-white">
         {numero}

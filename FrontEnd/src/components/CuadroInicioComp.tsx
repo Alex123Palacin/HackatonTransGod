@@ -6,23 +6,27 @@ function CuadroInicioComp() {
   const { redirigir } = useRedireccion();
 
   return (
-    <section className="w-full max-w-[520px] rounded-[24px] border-2 border-white bg-[#b9c4c5]/70 px-7 py-6 shadow-md backdrop-blur-[2px]">
-      <div className="flex flex-col gap-[30px]">
+    <section className="w-full max-w-full rounded-[20px] border-2 border-white bg-[#b9c4c5]/70 px-4 py-4 shadow-md backdrop-blur-[2px]">
+      <div className="flex flex-col gap-3">
         <InputLogin
           tipo="email"
           informacion="alex@gmail.com"
+          estilos="h-10 rounded-xl px-3 text-sm"
         />
         <InputLogin
           tipo="password"
           informacion="********"
+          estilos="h-10 rounded-xl px-3 text-sm"
         />
 
         <BtnBlanco
           informacion="Iniciar Seccion"
+          estilos="min-h-11 rounded-xl py-2 text-base"
           onClick={() => redirigir("/alex")}
         />
         <BtnVerde
           informacion="Registrarme"
+          estilos="min-h-11 rounded-xl py-2 text-base"
           onClick={() => redirigir("/alex")}
         />
       </div>

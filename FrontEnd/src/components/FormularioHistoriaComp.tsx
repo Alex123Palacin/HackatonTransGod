@@ -40,7 +40,7 @@ function FormularioHistoriaComp({
   }
 
   return (
-    <section className="w-full max-w-[388px] rounded-[16px] bg-white px-7 py-5 font-[Arial] shadow-sm">
+    <section className="w-full max-w-full rounded-[16px] bg-white px-4 py-5 font-[Arial] shadow-sm">
       <input
         ref={inputImagenesRef}
         type="file"
@@ -53,7 +53,7 @@ function FormularioHistoriaComp({
       <button
         type="button"
         onClick={abrirSelectorImagenes}
-        className="w-full rounded-[28px] border-2 border-dashed border-[#006f6c] px-5 py-3 text-center text-[20px] font-bold text-[#006f6c]"
+        className="w-full rounded-[28px] border-2 border-dashed border-[#006f6c] px-4 py-3 text-center text-[17px] font-bold text-[#006f6c]"
       >
         Seleccionar imagenes
       </button>
@@ -71,7 +71,7 @@ function FormularioHistoriaComp({
         </div>
       )}
 
-      <label className="mt-6 block text-[20px] font-bold text-[#006f6c]">
+      <label className="mt-5 block text-[17px] font-bold text-[#006f6c]">
         Titulo
       </label>
       <input
@@ -81,13 +81,13 @@ function FormularioHistoriaComp({
         className="mt-2 h-10 w-full rounded-lg border border-gray-300 bg-gray-50 px-3 text-[#006f6c] outline-none focus:border-[#006f6c] focus:ring-2 focus:ring-[#006f6c]/20"
       />
 
-      <label className="mt-6 block text-[20px] font-bold text-[#006f6c]">
+      <label className="mt-5 block text-[17px] font-bold text-[#006f6c]">
         Descripcion
       </label>
       <textarea
         value={descripcion}
         onChange={(event) => setDescripcion(event.target.value)}
-        className="mt-2 min-h-[245px] w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-3 text-[#006f6c] outline-none focus:border-[#006f6c] focus:ring-2 focus:ring-[#006f6c]/20"
+        className="mt-2 min-h-[180px] w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-3 text-[#006f6c] outline-none focus:border-[#006f6c] focus:ring-2 focus:ring-[#006f6c]/20"
       />
 
       <div className="mx-auto mt-6 flex w-full max-w-[256px] flex-col gap-4">

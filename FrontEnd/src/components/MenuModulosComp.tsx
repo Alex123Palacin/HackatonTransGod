@@ -65,7 +65,7 @@ function MenuModulosComp() {
   return (
     <nav
       aria-label="Menu de modulos"
-      className="flex w-full max-w-[794px] items-end justify-between gap-4 bg-white px-8 py-4 font-[Arial]"
+      className="flex w-full items-end justify-between gap-1 rounded-2xl bg-white px-2 py-3 font-[Arial]"
     >
       {modulosMenu.map(({ nombre, ruta, rutasActivas, Icono, guia }) => {
         const activo = estaActivo(rutasActivas);
@@ -76,11 +76,11 @@ function MenuModulosComp() {
               key={nombre}
               type="button"
               onClick={() => redirigir(ruta)}
-              className="flex w-[120px] flex-col items-center justify-end"
+              className="flex w-[86px] flex-col items-center justify-end"
             >
-              <span className="flex h-[136px] w-[136px] flex-col items-center justify-center rounded-full bg-[#006f6c] text-white">
-                <Icono className="h-[58px] w-[58px]" />
-                <span className="mt-1 text-[26px] font-bold leading-none">
+              <span className="flex h-[86px] w-[86px] flex-col items-center justify-center rounded-full bg-[#006f6c] text-white">
+                <Icono className="h-9 w-9" />
+                <span className="mt-1 text-[16px] font-bold leading-none">
                   {nombre}
                 </span>
               </span>
@@ -93,12 +93,12 @@ function MenuModulosComp() {
             key={nombre}
             type="button"
             onClick={() => redirigir(ruta)}
-            className={`flex w-[120px] flex-col items-center justify-end font-bold ${
+            className={`flex w-[64px] flex-col items-center justify-end font-bold ${
               activo ? "text-[#006f6c]" : "text-[#5b5b5b] "
             }`}
           >
-            <Icono className="h-[64px] w-[64px]" />
-            <span className="mt-1 text-[26px] leading-none">{nombre}</span>
+            <Icono className="h-8 w-8" />
+            <span className="mt-1 text-[12px] leading-none">{nombre}</span>
           </button>
         );
       })}

@@ -13,7 +13,7 @@ function MiniExperienciaComp({
   const imagenesExtra = Math.max(imagenes.length - 3, 0);
 
   return (
-    <article className="grid w-full max-w-[350px] grid-cols-[1fr_188px] gap-4 rounded-xl border border-gray-400 bg-white p-3 font-[Arial] shadow-sm">
+    <article className="grid w-full max-w-full grid-cols-[1fr_170px] gap-3 rounded-xl border border-gray-400 bg-white p-3 font-[Arial] shadow-sm">
       <div>
         <h3 className="text-[16px] font-bold leading-5 text-[#006f6c]">
           {titulo}
@@ -23,7 +23,7 @@ function MiniExperienciaComp({
         </p>
       </div>
 
-      <div className="grid h-[150px] grid-cols-2 grid-rows-2 overflow-hidden">
+      <div className="grid h-[135px] grid-cols-2 grid-rows-2 overflow-hidden">
         <ImagenExperiencia
           src={imagenesMostradas[0]}
           alt={`${titulo} 1`}
