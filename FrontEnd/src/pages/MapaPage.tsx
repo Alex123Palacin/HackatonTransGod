@@ -1,10 +1,11 @@
-import React from "react";
+import AdaptadoMobil from "../components/AdaptadoMobil";
+
 
 function MapaPage() {
   return (
-    <div>
-      <h1>Pantalla de Mapas</h1>
-    </div>
+    <AdaptadoMobil>
+<h1>a</h1>
+    </AdaptadoMobil>
   );
 }
 

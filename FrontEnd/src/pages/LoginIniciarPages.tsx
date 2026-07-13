@@ -1,44 +1,36 @@
-import ComparteVisitaComp from "../components/ComparteVisitaComp";
+
+
+import ImagenLoginPozo from "../assets/ImagenLoginPozo.png";
+import AdaptadoMobil from "../components/AdaptadoMobil";
 import CuadroInicioComp from "../components/CuadroInicioComp";
-import CuadroRegistrarComp from "../components/CuadroRegistrarComp";
-import FormularioHistoriaComp from "../components/FormularioHistoriaComp";
-import MenuModulosComp from "../components/MenuModulosComp";
-import MiniComunicadoComp from "../components/MiniComunicadoComp";
-import MiniExperienciaComp from "../components/MiniExperienciaComp";
-import PasosInicio from "../components/PasosInicio";
+import { H1Login } from "../ui/TextoUi";
 
 function LoginIniciarPages() {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-white">
-      <div
-        className="h-screen overflow-x-hidden overflow-y-auto border-4 border-black bg-[#dbeee8] p-4 font-[Arial]"
-        style={{
-          width: "30vw",
-          minWidth: "400px",/*360  */
-          maxWidth: "500px",/*430  */
-          wordBreak: "break-all",
-          overflowWrap: "anywhere",
-          whiteSpace: "normal",
-        }}
+    <AdaptadoMobil>
+      <section
+        className="flex min-h-screen w-full flex-col justify-end overflow-hidden bg-cover bg-center px-5 pb-6 pt-16 [overflow-wrap:normal] [word-break:normal]"
+        style={{ backgroundImage: `url(${ImagenLoginPozo})` }}
       >
-        <h1>aaaaaaaaaaññññññññññññññññaaaaaaaaaaaaa</h1>
+        <div className="mb-7 [overflow-wrap:normal] [word-break:normal]">
+          <span className="inline-flex rounded-full bg-white px-3 py-2 text-xs font-bold text-[#006f6c] shadow-sm [overflow-wrap:normal] [word-break:normal]">
+            Guia interactiva
+          </span>
 
-        <div className="mt-4 flex w-full min-w-0 flex-col gap-4">
-          <MenuModulosComp />
-          <CuadroRegistrarComp />
-          <CuadroInicioComp />
-          <PasosInicio
-            numero={1}
-            titulo="Elige un lugar"
-            descripcion="En mapas toca una zona turistica y veras la foto, descripcion y mas"
+          <H1Login
+            informacion="Poza de la Arenilla"
+            estilos="mt-4 max-w-[260px] text-[30px] font-bold leading-[34px] [overflow-wrap:normal] [word-break:normal]"
           />
-          <ComparteVisitaComp />
-          <FormularioHistoriaComp />
-          <MiniComunicadoComp />
-          <MiniExperienciaComp />
+
+          <p className="mt-3 max-w-[330px] text-[13px] font-bold leading-4 text-white [overflow-wrap:normal] [word-break:normal]">
+            Ingresa para explorar lugares, noticias, album de aves, scanner IA
+            y guia por voz o mensajes.
+          </p>
         </div>
-      </div>
-    </div>
+
+        <CuadroInicioComp />
+      </section>
+    </AdaptadoMobil>
   );
 }
 

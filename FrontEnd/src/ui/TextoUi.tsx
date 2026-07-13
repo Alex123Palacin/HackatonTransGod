@@ -41,3 +41,4 @@ function InputLogin({
 
 
 export { H1Login, InputLogin };
+export { default as BuscaTuAve } from "./BuscaTuAve";

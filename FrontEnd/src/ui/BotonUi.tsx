@@ -1,3 +1,6 @@
+import { FaArrowLeft } from "react-icons/fa";
+import { useRedireccion } from "../hooks/redireccion";
+
 type BotonProps = {
   informacion: string;
   estilos?: string;
@@ -28,4 +31,27 @@ function BtnBlanco({ informacion, estilos = "", onClick }: BotonProps) {
   );
 }
 
-export { BtnVerde, BtnBlanco };
+type FlechitaRetrocedeProps = {
+  ruta?: string;
+  estilos?: string;
+};
+
+function FlechitaRetrocede({
+  ruta = "/Inicio",
+  estilos = "",
+}: FlechitaRetrocedeProps) {
+  const { redirigir } = useRedireccion();
+
+  return (
+    <button
+      type="button"
+      aria-label="Retroceder"
+      onClick={() => redirigir(ruta)}
+      className={`flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#006f6c] shadow-md ${estilos}`}
+    >
+      <FaArrowLeft className="h-4 w-4" />
+    </button>
+  );
+}
+
+export { BtnVerde, BtnBlanco, FlechitaRetrocede };

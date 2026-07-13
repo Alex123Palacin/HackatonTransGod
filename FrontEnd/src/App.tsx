@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import InicioPages from './pages/InicioPages';
@@ -9,6 +8,7 @@ import MapaPage from './pages/MapaPage';
 import ScanPages from './pages/ScanPages';
 import CatalogoPages from './pages/CatalogoPages';
 import DescripcionAvePages from './pages/DescripcionAvePages';
+import DetalleScanerPages from './pages/DetalleScanerPages';
 import NoticiasPages from './pages/NoticiasPages';
 import PublicarNoticiaPages from './pages/PublicarNoticiaPages';
 
@@ -22,10 +22,11 @@ function App() {
         <Route path='/registro' element={<LoginRegistrarPages />} />
         <Route path='/mapas' element={<MapaPage />} />
         <Route path='/scan' element={<ScanPages />} />
+        <Route path='/scan/detalle' element={<DetalleScanerPages />} />
         <Route path='/catalogo' element={<CatalogoPages />} />
         <Route path='/descripcion-ave' element={<DescripcionAvePages />} />
         <Route path='/noticias' element={<NoticiasPages />} />
-        <Route path='/publicar-noticia' element={<PublicarNoticiaPages />} />
+        <Route path='/noticias/publicar' element={<PublicarNoticiaPages />} />
       </Routes>
     </Router>
   );

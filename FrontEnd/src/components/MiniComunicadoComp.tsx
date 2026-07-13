@@ -16,10 +16,10 @@ function MiniComunicadoComp({
   onVer,
 }: MiniComunicadoCompProps) {
   return (
-    <article className="grid w-full max-w-full grid-cols-[1fr_92px] gap-3 rounded-lg border border-gray-400 bg-white p-3 font-[Arial] shadow-sm">
+    <article className="grid w-full max-w-full grid-cols-[1fr_88px] gap-3 rounded-xl border border-gray-400 bg-white p-3 font-[Arial] shadow-sm [overflow-wrap:normal] [word-break:normal]">
       <div className="flex min-w-0 flex-col">
-        <span className="text-[9px] font-bold text-[#006f6c]">{categoria}</span>
-        <h3 className="mt-3 text-[16px] font-bold leading-5 text-[#006f6c]">
+        <span className="text-[9px] font-bold text-[#006f6c] [overflow-wrap:normal] [word-break:normal]">{categoria}</span>
+        <h3 className="mt-2 text-[15px] font-bold leading-5 text-[#006f6c] [overflow-wrap:normal] [word-break:normal]">
           {titulo}
         </h3>
         <span className="mt-2 text-[11px] text-gray-500">{fecha}</span>
@@ -29,16 +29,16 @@ function MiniComunicadoComp({
         <img
           src={imagenUrl}
           alt={titulo}
-          className="h-[98px] w-[92px] object-cover"
+          className="h-[88px] w-[88px] rounded-sm object-cover"
         />
       ) : (
-        <div className="h-[98px] w-[92px] bg-gray-300" />
+        <div className="h-[88px] w-[88px] rounded-sm bg-gray-300" />
       )}
 
       <div className="col-span-2 flex justify-center">
         <BtnBlanco
           informacion="Ver"
-          estilos="min-h-[24px] max-w-[175px] rounded-full py-1 text-[12px]"
+          estilos="!min-h-7 !w-[160px] !rounded-full !px-3 !py-1 !text-[12px] leading-none"
           onClick={onVer}
         />
       </div>

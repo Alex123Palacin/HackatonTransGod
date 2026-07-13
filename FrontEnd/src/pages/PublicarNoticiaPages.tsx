@@ -1,10 +1,28 @@
-import React from "react";
+import AdaptadoMobil from "../components/AdaptadoMobil";
+import FormularioHistoriaComp from "../components/FormularioHistoriaComp";
+import MenuModulosComp from "../components/MenuModulosComp";
 
 function PublicarNoticiaPages() {
   return (
-    <div>
-      <h1>Pantalla para Publicar Historia o Noticia</h1>
-    </div>
+    <AdaptadoMobil>
+      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+        <main className="flex flex-1 flex-col px-6 pb-7 pt-8 [overflow-wrap:normal] [word-break:normal]">
+          <h1 className="text-[20px] font-bold text-[#006f6c] [overflow-wrap:normal] [word-break:normal]">
+            Publicar historia
+          </h1>
+          <p className="mt-4 max-w-[310px] text-[12px] leading-4 text-gray-500 [overflow-wrap:normal] [word-break:normal]">
+            Sube una foto del lugar y agrega una descripcion para compartirla
+            con visitantes.
+          </p>
+
+          <div className="mt-7">
+            <FormularioHistoriaComp />
+          </div>
+        </main>
+
+        <MenuModulosComp />
+      </section>
+    </AdaptadoMobil>
   );
 }
 
