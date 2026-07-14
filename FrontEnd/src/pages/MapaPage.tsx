@@ -72,6 +72,7 @@ function MapaPage() {
       <div style={{ width: "100%", position: "relative", overflow: "hidden" }}>
         <div style={{ width: "100%", paddingTop: "78%", position: "relative" }}>
           
+          {/* mapa desplegable */}
           <iframe
             key={mapKey}
             title="Mapa de La Punta"
