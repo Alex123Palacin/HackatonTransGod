@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import DescripcionLugarComp from "../components/DescripcionLugarComp";
 import MenuModulosComp from "../components/MenuModulosComp";
+import { useRedireccion } from "../hooks/redireccion"; 
 
 const imagenesDetalle = [
   "https://consultasenlinea.mincetur.gob.pe/fichaInventario//foto.aspx?cod=293086", 
@@ -59,101 +60,82 @@ const lugares = [
 function MapaPage() {
   const [lugarSeleccionado, setLugarSeleccionado] = useState<any>(lugares[0]);
   const [mapKey, setMapKey] = useState<number>(0);
+  const { redirigir } = useRedireccion();
 
-  const mapUrl = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2516.3656793352357!2d-77.16021857408383!3d-12.072547103927953!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2spe!4v1784046905635!5m2!1ses!2spe";
+  const mapUrl = "https://maps.google.com/maps?ll=-12.0725,-77.1596&z=16&output=embed";
 
   const seleccionarLugar = (lugar: any) => {
     setLugarSeleccionado(lugar);
     setMapKey((prevKey) => prevKey + 1);
   };
 
+  const btnClasePin = "absolute w-9 h-9 rounded-full bg-[#006f6c] text-white border-[2.5px] border-white font-bold text-[16px] flex items-center justify-center shadow-[0_3px_6px_rgba(0,0,0,0.4)] -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10 cursor-pointer transition-transform active:scale-95";
+
   return (
     <AdaptadoMobil>
-      <div style={{ width: "100%", position: "relative", overflow: "hidden" }}>
-        <div style={{ width: "100%", paddingTop: "78%", position: "relative" }}>
-          
-          {/* mapa desplegable */}
+      <div className="w-full relative overflow-hidden">
+        <div className="w-full relative pb-[78%]">
           <iframe
             key={mapKey}
             title="Mapa de La Punta"
             src={mapUrl}
-            style={{ 
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              border: 0,
-              pointerEvents: "auto"
-            }}
+            className="absolute top-0 left-0 w-full h-full border-0 pointer-events-auto"
             allowFullScreen={true}
             loading="lazy"
           />
 
           <button 
             onClick={() => seleccionarLugar(lugares[0])} 
-            style={{ ...btnEstilo, top: "25%", left: "61%" }}
+            className={`${btnClasePin} top-[22%] left-[57%]`}
           >
             1
           </button>
 
           <button 
             onClick={() => seleccionarLugar(lugares[1])} 
-            style={{ ...btnEstilo, top: "33%", left: "72%" }}
+            className={`${btnClasePin} top-[35%] left-[67%]`}
           >
             2
           </button>
 
           <button 
             onClick={() => seleccionarLugar(lugares[2])} 
-            style={{ ...btnEstilo, top: "37%", left: "46%" }}
+            className={`${btnClasePin} top-[35%] left-[47%]`}
           >
             3
           </button>
 
           <button 
             onClick={() => seleccionarLugar(lugares[3])} 
-            style={{ ...btnEstilo, top: "54%", left: "55%" }}
+            className={`${btnClasePin} top-[58%] left-[53%]`}
           >
             4
           </button>
-
         </div>
       </div>
 
       {lugarSeleccionado && (
-        <DescripcionLugarComp
-          numero={lugarSeleccionado.numero}
-          titulo={lugarSeleccionado.titulo}
-          descripcion={lugarSeleccionado.descripcion}
-          imagenes={lugarSeleccionado.imagenes}
-          detalles={lugarSeleccionado.detalles}
-        />
+        <div className="flex flex-col items-center w-full mt-4">
+          <DescripcionLugarComp
+            numero={lugarSeleccionado.numero}
+            titulo={lugarSeleccionado.titulo}
+            descripcion={lugarSeleccionado.descripcion}
+            imagenes={lugarSeleccionado.imagenes}
+            detalles={lugarSeleccionado.detalles}
+          />
+          
+          <button
+            onClick={() => redirigir("/mapa/conoceMas")}
+            className="my-6 px-10 py-3 bg-[#006f6c] text-white font-bold rounded-full text-lg shadow-md hover:bg-[#0b524e] active:scale-95 transition-all duration-200"
+          >
+            Conoce más
+          </button>
+        </div>
       )}
 
       <MenuModulosComp />
     </AdaptadoMobil>
   );
 }
-
-const btnEstilo: React.CSSProperties = {
-  position: "absolute",
-  width: "36px",
-  height: "36px",
-  borderRadius: "50%",
-  backgroundColor: "#0F6E68", 
-  color: "white",
-  border: "2.5px solid white",
-  fontWeight: "bold",
-  fontSize: "16px",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  boxShadow: "0px 3px 6px rgba(0,0,0,0.4)",
-  transform: "translate(-50%, -50%)",
-  pointerEvents: "auto",
-  zIndex: 10
-};
 
 export default MapaPage;

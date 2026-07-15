@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
-import { BtnBlanco } from "../ui/BotonUi";
 
 type DetalleLugar = {
   etiqueta: string;
@@ -13,8 +12,6 @@ type DescripcionLugarCompProps = {
   descripcion: string;
   imagenes: string[];
   detalles?: DetalleLugar[];
-  textoBoton?: string;
-  onClickBoton?: () => void;
 };
 
 function DescripcionLugarComp({
@@ -23,8 +20,6 @@ function DescripcionLugarComp({
   descripcion,
   imagenes,
   detalles = [],
-  textoBoton = "Conoce mas",
-  onClickBoton,
 }: DescripcionLugarCompProps) {
   const [galeriaAbierta, setGaleriaAbierta] = useState(false);
   const imagenesVisibles = imagenes.slice(0, 3);
@@ -83,12 +78,6 @@ function DescripcionLugarComp({
           </div>
         ))}
       </div>
-
-      <BtnBlanco
-        informacion={textoBoton}
-        onClick={onClickBoton}
-        estilos="!mx-auto !mt-4 !flex !min-h-0 !w-[210px] !items-center !justify-center !rounded-[14px] !px-4 !py-3 !text-[15px]"
-      />
 
       {galeriaAbierta && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-5">
