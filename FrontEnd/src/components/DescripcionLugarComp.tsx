@@ -12,7 +12,7 @@ type DescripcionLugarCompProps = {
   descripcion: string;
   imagenes: string[];
   detalles?: DetalleLugar[];
-  children?: ReactNode; // <-- Agregamos children para recibir el botón
+  children?: ReactNode; 
 };
 
 function DescripcionLugarComp({
@@ -21,7 +21,7 @@ function DescripcionLugarComp({
   descripcion,
   imagenes,
   detalles = [],
-  children, // <-- Lo destructuramos aquí
+  children,
 }: DescripcionLugarCompProps) {
   const [galeriaAbierta, setGaleriaAbierta] = useState(false);
   const imagenesVisibles = imagenes.slice(0, 3);
@@ -81,7 +81,6 @@ function DescripcionLugarComp({
         ))}
       </div>
 
-      {/* Renderiza el botón aquí adentro, integrándolo perfectamente en la tarjeta */}
       {children && (
         <div className="w-full flex justify-center mt-6">
           {children}
