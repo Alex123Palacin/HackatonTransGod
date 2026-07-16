@@ -1,31 +1,35 @@
+import type { ReactNode } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRedireccion } from "../hooks/redireccion";
 
 type BotonProps = {
   informacion: string;
   estilos?: string;
+  icono?: ReactNode;
   onClick?: () => void;
 };
 
-function BtnVerde({ informacion, estilos = "", onClick }: BotonProps) {
+function BtnVerde({ informacion, estilos = "", icono, onClick }: BotonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-[72px] w-full rounded-[22px] bg-white px-6 py-4 font-[Arial] text-[30px] font-bold text-[#006f6c] shadow-sm ${estilos}`}
+      className={`flex min-h-[72px] w-full items-center justify-center gap-2 rounded-[22px] bg-white px-6 py-4 font-[Arial] text-[30px] font-bold text-[#006f6c] shadow-sm ${estilos}`}
     >
+      {icono}
       {informacion}
     </button>
   );
 }
 
-function BtnBlanco({ informacion, estilos = "", onClick }: BotonProps) {
+function BtnBlanco({ informacion, estilos = "", icono, onClick }: BotonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-[72px] w-full rounded-[22px] bg-[#006f6c] px-6 py-4 font-[Arial] text-[30px] font-bold text-white shadow-sm ${estilos}`}
+      className={`flex min-h-[72px] w-full items-center justify-center gap-2 rounded-[22px] bg-[#006f6c] px-6 py-4 font-[Arial] text-[30px] font-bold text-white shadow-sm ${estilos}`}
     >
+      {icono}
       {informacion}
     </button>
   );

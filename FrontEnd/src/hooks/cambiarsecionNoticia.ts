@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type SecionNoticia = "comunicados" | "publicaciones";
+type SecionNoticia = "comunicados" | "publicaciones" | "reportes";
 
 function useCambiarSecionNoticia(secionInicial: SecionNoticia = "comunicados") {
   const [secionActiva, setSecionActiva] = useState<SecionNoticia>(secionInicial);
@@ -14,6 +14,7 @@ function useCambiarSecionNoticia(secionInicial: SecionNoticia = "comunicados") {
     cambiarSecion,
     esComunicados: secionActiva === "comunicados",
     esPublicaciones: secionActiva === "publicaciones",
+    esReportes: secionActiva === "reportes",
   };
 }
 

@@ -46,7 +46,7 @@ const modulosMenu: ModuloMenu[] = [
   {
     nombre: "Noticias",
     ruta: "/noticias",
-    rutasActivas: ["/noticias"],
+    rutasActivas: ["/noticias", "/reporte"],
     Icono: FaRegNewspaper,
   },
 ];

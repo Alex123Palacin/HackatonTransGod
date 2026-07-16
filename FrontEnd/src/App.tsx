@@ -11,6 +11,11 @@ import DescripcionAvePages from './pages/DescripcionAvePages';
 import DetalleScanerPages from './pages/DetalleScanerPages';
 import NoticiasPages from './pages/NoticiasPages';
 import PublicarNoticiaPages from './pages/PublicarNoticiaPages';
+import {
+  QuejasReportePages,
+  ReportarPages,
+  VerReportesPages,
+} from './pages/ReporteDestinoPages';
 
 function App() {
   return (
@@ -27,6 +32,9 @@ function App() {
         <Route path='/descripcion-ave' element={<DescripcionAvePages />} />
         <Route path='/noticias' element={<NoticiasPages />} />
         <Route path='/noticias/publicar' element={<PublicarNoticiaPages />} />
+        <Route path='/noticias/Reportar' element={<ReportarPages />} />
+        <Route path='/noticias/verReport' element={<VerReportesPages />} />
+        <Route path='/reporte/quejas' element={<QuejasReportePages />} />
       </Routes>
     </Router>
   );

@@ -6,6 +6,7 @@ import PaginaComunicado from "./PaginaComunicado";
 import type { Comunicado } from "./PaginaComunicado";
 import PaginaPublicacion from "./PaginaPublicacion";
 import type { Publicacion } from "./PaginaPublicacion";
+import PaginaReporte from "./PaginaReporte";
 
 const imagenesDragonBall = [
   "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2021/05/Dragon-Ball_-Fanart-imagina-como-se-veria-Goku-super-saiyajin-3-en-la-vida-real-.jpg?fit=768%2C432&ssl=1",
@@ -70,46 +71,43 @@ const publicacionesEjemplo: Publicacion[] = [
 ];
 
 function NoticiasPages() {
-  const { esComunicados, cambiarSecion } = useCambiarSecionNoticia();
+  const { secionActiva, cambiarSecion, esComunicados, esPublicaciones } =
+    useCambiarSecionNoticia();
+
+  const pestañas = [
+    { id: "comunicados" as const, texto: "Comunicados" },
+    { id: "publicaciones" as const, texto: "Publicaciones" },
+    { id: "reportes" as const, texto: "Reportes" },
+  ];
 
   return (
     <AdaptadoMobil>
       <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
-        <div className="flex gap-3 px-5 pb-3 pt-6">
-          {esComunicados ? (
-            <BtnBlanco
-              informacion="Comunicados"
-              estilos="!min-h-8 !rounded-full !px-3 !py-1 !text-[13px] leading-none whitespace-nowrap"
-              onClick={() => cambiarSecion("comunicados")}
-            />
-          ) : (
-            <BtnVerde
-              informacion="Comunicados"
-              estilos="!min-h-8 !rounded-full !border !border-gray-400 !px-3 !py-1 !text-[13px] leading-none whitespace-nowrap"
-              onClick={() => cambiarSecion("comunicados")}
-            />
-          )}
+        <div className="grid grid-cols-3 gap-2 px-4 pb-3 pt-6">
+          {pestañas.map((pestaña) => {
+            const activo = secionActiva === pestaña.id;
+            const Boton = activo ? BtnBlanco : BtnVerde;
 
-          {esComunicados ? (
-            <BtnVerde
-              informacion="Publicaciones"
-              estilos="!min-h-8 !rounded-full !border !border-gray-400 !px-3 !py-1 !text-[13px] leading-none whitespace-nowrap"
-              onClick={() => cambiarSecion("publicaciones")}
-            />
-          ) : (
-            <BtnBlanco
-              informacion="Publicaciones"
-              estilos="!min-h-8 !rounded-full !px-3 !py-1 !text-[13px] leading-none whitespace-nowrap"
-              onClick={() => cambiarSecion("publicaciones")}
-            />
-          )}
+            return (
+              <Boton
+                key={pestaña.id}
+                informacion={pestaña.texto}
+                estilos={`!min-h-0 !rounded-full !px-2 !py-2 !text-[11px] !leading-none ${
+                  activo ? "" : "!border !border-gray-300"
+                }`}
+                onClick={() => cambiarSecion(pestaña.id)}
+              />
+            );
+          })}
         </div>
 
-        <div className="flex flex-1 flex-col gap-4 px-5 pb-5">
+        <div className="flex flex-1 flex-col gap-4 px-4 pb-5">
           {esComunicados ? (
             <PaginaComunicado comunicados={comunicadosEjemplo} />
-          ) : (
+          ) : esPublicaciones ? (
             <PaginaPublicacion publicaciones={publicacionesEjemplo} />
+          ) : (
+            <PaginaReporte />
           )}
         </div>
 
