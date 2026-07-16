@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { FaXmark } from "react-icons/fa6";
 
 type DetalleLugar = {
@@ -12,6 +12,7 @@ type DescripcionLugarCompProps = {
   descripcion: string;
   imagenes: string[];
   detalles?: DetalleLugar[];
+  children?: ReactNode; // <-- Agregamos children para recibir el botón
 };
 
 function DescripcionLugarComp({
@@ -20,6 +21,7 @@ function DescripcionLugarComp({
   descripcion,
   imagenes,
   detalles = [],
+  children, // <-- Lo destructuramos aquí
 }: DescripcionLugarCompProps) {
   const [galeriaAbierta, setGaleriaAbierta] = useState(false);
   const imagenesVisibles = imagenes.slice(0, 3);
@@ -78,6 +80,13 @@ function DescripcionLugarComp({
           </div>
         ))}
       </div>
+
+      {/* Renderiza el botón aquí adentro, integrándolo perfectamente en la tarjeta */}
+      {children && (
+        <div className="w-full flex justify-center mt-6">
+          {children}
+        </div>
+      )}
 
       {galeriaAbierta && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-5">
