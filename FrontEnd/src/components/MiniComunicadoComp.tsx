@@ -2,16 +2,16 @@ import { BtnBlanco } from "../ui/BotonUi";
 
 type MiniComunicadoCompProps = {
   categoria?: string;
-  titulo?: string;
-  fecha?: string;
+  titulo: string;
+  fecha: string;
   imagenUrl?: string;
   onVer?: () => void;
 };
 
 function MiniComunicadoComp({
   categoria = "Comunicado",
-  titulo = "Falta de mantenimiento en el malecon",
-  fecha = "11/07/2026",
+  titulo,
+  fecha,
   imagenUrl,
   onVer,
 }: MiniComunicadoCompProps) {

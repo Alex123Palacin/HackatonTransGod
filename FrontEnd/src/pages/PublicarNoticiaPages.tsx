@@ -1,8 +1,13 @@
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import FormularioHistoriaComp from "../components/FormularioHistoriaComp";
 import MenuModulosComp from "../components/MenuModulosComp";
+import { useFormularioPublicacion } from "../hooks/usarFormularioPublicacion";
+import { useRedireccion } from "../hooks/redireccion";
 
 function PublicarNoticiaPages() {
+  const { publicar, enviando, error } = useFormularioPublicacion();
+  const { redirigir } = useRedireccion();
+
   return (
     <AdaptadoMobil>
       <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
@@ -16,7 +21,12 @@ function PublicarNoticiaPages() {
           </p>
 
           <div className="mt-7">
-            <FormularioHistoriaComp />
+            <FormularioHistoriaComp
+              onSubirHistoria={(historia) => void publicar(historia)}
+              onCancelar={() => redirigir("/noticias?seccion=publicaciones")}
+              enviando={enviando}
+              error={error}
+            />
           </div>
         </main>
 

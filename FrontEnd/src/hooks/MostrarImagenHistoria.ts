@@ -5,6 +5,7 @@ type ImagenHistoria = {
   id: string;
   nombre: string;
   url: string;
+  archivo: File;
 };
 
 function useMostrarImagenHistoria() {
@@ -33,6 +34,7 @@ function useMostrarImagenHistoria() {
       id: `${archivo.name}-${archivo.lastModified}-${index}-${Date.now()}`,
       nombre: archivo.name,
       url: URL.createObjectURL(archivo),
+      archivo,
     }));
 
     setImagenes((imagenesActuales) => [...imagenesActuales, ...nuevasImagenes]);

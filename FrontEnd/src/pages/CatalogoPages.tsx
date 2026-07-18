@@ -4,86 +4,40 @@ import PorcentajeAveComp from "../components/porcentajeAveComp";
 import VistaAnimalComp from "../components/vistanimalComp";
 import type { AveDesconocida } from "../components/secicionDesconocidos";
 import type { AveRegistrada } from "../components/seccionRegistrados";
+import { useCatalogo } from "../hooks/usarCatalogo";
 import { useRedireccion } from "../hooks/redireccion";
 import { BuscaTuAve } from "../ui/TextoUi";
 
-const imagenesAves = [
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYISqS21khx4P141UoH6dZU5qIpM8vl7yAgFt0uC2adw&s=10",
-  "https://sg.portal-pokemon.com/play/resources/pokedex/img/pm/ca3db4aad5c85a525d9be86852b26db1db7a22c0.png",
-  "https://i.pinimg.com/474x/08/49/c4/0849c426da6862d43591cd4b97583474.jpg",
-  "https://static.wikia.nocookie.net/fakemon/images/c/c7/Raichu_anime.png/revision/latest?cb=20091217140920&path-prefix=es",
-];
-
-const avesRegistradas: AveRegistrada[] = [
-  {
-    id: 1,
-    nombre: "Gaviota peruana",
-    imagenUrl: imagenesAves[0],
-    encontrada: true,
-  },
-  {
-    id: 2,
-    nombre: "Garza blanca",
-    imagenUrl: imagenesAves[1],
-    encontrada: true,
-  },
-  {
-    id: 3,
-    nombre: "Cormoran guanay",
-    imagenUrl: imagenesAves[2],
-    encontrada: true,
-  },
-  {
-    id: 4,
-    nombre: "Playero blanco",
-    imagenUrl: imagenesAves[3],
-    encontrada: true,
-  },
-  {
-    id: 5,
-    nombre: "Pelicano peruano",
-    imagenUrl: imagenesAves[1],
-    encontrada: true,
-  },
-  {
-    id: 6,
-    nombre: "Quisco peruano",
-    imagenUrl: imagenesAves[2],
-    encontrada: true,
-  },
-  {
-    id: 7,
-    nombre: "Piquero de patas azules",
-    imagenUrl: imagenesAves[0],
-    encontrada: false,
-  },
-  {
-    id: 8,
-    nombre: "Zarapito trinador",
-    imagenUrl: imagenesAves[3],
-    encontrada: false,
-  },
-  {
-    id: 9,
-    nombre: "Chorlo nevado",
-    imagenUrl: imagenesAves[2],
-    encontrada: false,
-  },
-];
-
-const avesDesconocidas: AveDesconocida[] = [
-  { id: 1, fecha: "11/07/2026", imagenUrl: imagenesAves[0] },
-  { id: 2, fecha: "11/07/2026", imagenUrl: imagenesAves[1] },
-  { id: 3, fecha: "11/07/2026", imagenUrl: imagenesAves[2] },
-  { id: 4, fecha: "11/07/2026", imagenUrl: imagenesAves[3] },
-  { id: 5, fecha: "11/07/2026", imagenUrl: imagenesAves[1] },
-  { id: 6, fecha: "11/07/2026", imagenUrl: imagenesAves[2] },
-  { id: 7, fecha: "11/07/2026", imagenUrl: imagenesAves[0] },
-  { id: 8, fecha: "11/07/2026", imagenUrl: imagenesAves[1] },
-];
+const formateadorFecha = new Intl.DateTimeFormat("es-PE", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 function CatalogoPages() {
   const { redirigir } = useRedireccion();
+  const {
+    resumen,
+    aves,
+    desconocidas,
+    busqueda,
+    setBusqueda,
+    cargando,
+    error,
+    cargarCatalogo,
+  } = useCatalogo();
+
+  const avesRegistradas: AveRegistrada[] = aves.map((ave) => ({
+    id: ave.id_ave,
+    nombre: ave.nombre,
+    imagenUrl: ave.imagen_principal,
+    encontrada: ave.encontrada,
+  }));
+  const avesDesconocidas: AveDesconocida[] = desconocidas.map((ave) => ({
+    id: ave.id_escaneo,
+    imagenUrl: ave.imagen,
+    fecha: formateadorFecha.format(new Date(ave.fecha)),
+  }));
 
   return (
     <AdaptadoMobil>
@@ -93,16 +47,43 @@ function CatalogoPages() {
             Mi Catalogo
           </h1>
 
-          <PorcentajeAveComp encontradas={10} total={100} porcentaje={10} />
-          <BuscaTuAve />
-
-          <VistaAnimalComp
-            registradas={avesRegistradas}
-            desconocidas={avesDesconocidas}
-            totalRegistradas={100}
-            totalDesconocidas={8}
-            onSeleccionarAve={() => redirigir("/descripcion-ave")}
+          <PorcentajeAveComp
+            encontradas={resumen.encontradas}
+            total={resumen.total}
+            porcentaje={resumen.porcentaje}
           />
+          <BuscaTuAve valor={busqueda} onChange={setBusqueda} />
+
+          {cargando && (
+            <p className="py-5 text-center text-[12px] text-slate-500">
+              Actualizando catalogo...
+            </p>
+          )}
+
+          {!cargando && error && (
+            <div className="rounded-xl bg-white px-4 py-5 text-center shadow-sm">
+              <p className="text-[12px] text-red-600">{error}</p>
+              <button
+                type="button"
+                onClick={() => void cargarCatalogo()}
+                className="mt-3 text-[12px] font-bold text-[#006f6c]"
+              >
+                Volver a intentar
+              </button>
+            </div>
+          )}
+
+          {!cargando && !error && (
+            <VistaAnimalComp
+              registradas={avesRegistradas}
+              desconocidas={avesDesconocidas}
+              totalRegistradas={resumen.total}
+              totalDesconocidas={avesDesconocidas.length}
+              onSeleccionarAve={(ave) =>
+                redirigir(`/descripcion-ave/${ave.id}`)
+              }
+            />
+          )}
         </main>
 
         <MenuModulosComp />

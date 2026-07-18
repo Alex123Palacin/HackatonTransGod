@@ -1,10 +1,21 @@
 import { BtnBlanco } from "../ui/BotonUi";
+import { useRedireccion } from "../hooks/redireccion";
 
 type ComparteVisitaCompProps = {
   onSubirHistoria?: () => void;
 };
 
 function ComparteVisitaComp({ onSubirHistoria }: ComparteVisitaCompProps) {
+  const { redirigir } = useRedireccion();
+
+  function abrirFormulario() {
+    if (onSubirHistoria) {
+      onSubirHistoria();
+      return;
+    }
+    redirigir("/noticias/publicar");
+  }
+
   return (
     <section className="flex w-full max-w-full items-center gap-3 rounded-[16px] bg-white px-4 py-4 font-[Arial] shadow-sm [overflow-wrap:normal] [word-break:normal]">
       <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#e4f1ed] text-[#006f6c]">
@@ -32,7 +43,7 @@ function ComparteVisitaComp({ onSubirHistoria }: ComparteVisitaCompProps) {
           <BtnBlanco
             informacion="Subir Historia"
             estilos="!min-h-8 !w-[140px] !rounded-xl !px-3 !py-1 !text-xs leading-none whitespace-nowrap [overflow-wrap:normal] [word-break:normal]"
-            onClick={onSubirHistoria}
+            onClick={abrirFormulario}
           />
         </div>
       </div>

@@ -19,7 +19,7 @@ function BuscaTuAve({
         value={valor}
         placeholder={placeholder}
         onChange={(event) => onChange?.(event.target.value)}
-        className="min-w-0 flex-1 bg-transparent text-[20px] text-[#006f6c] outline-none placeholder:text-gray-500 [overflow-wrap:normal] [word-break:normal]"
+        className="min-w-0 flex-1 bg-transparent text-[15px] text-[#006f6c] outline-none placeholder:text-gray-500 [overflow-wrap:normal] [word-break:normal]"
       />
     </label>
   );

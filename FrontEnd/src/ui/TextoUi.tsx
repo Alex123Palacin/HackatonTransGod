@@ -17,6 +17,12 @@ type InputLoginProps = {
   valor?: string;
   estilos?: string;
   onChange?: (valor: string) => void;
+  nombre?: string;
+  autoComplete?: string;
+  requerido?: boolean;
+  deshabilitado?: boolean;
+  longitudMinima?: number;
+  longitudMaxima?: number;
 };
 
 function InputLogin({
@@ -25,14 +31,27 @@ function InputLogin({
   valor,
   estilos = "",
   onChange,
+  nombre,
+  autoComplete,
+  requerido = false,
+  deshabilitado = false,
+  longitudMinima,
+  longitudMaxima,
 }: InputLoginProps) {
   return (
     <input
       type={tipo}
+      name={nombre}
       placeholder={informacion}
       value={valor}
+      aria-label={informacion}
+      autoComplete={autoComplete}
+      required={requerido}
+      disabled={deshabilitado}
+      minLength={longitudMinima}
+      maxLength={longitudMaxima}
       onChange={(event) => onChange?.(event.target.value)}
-      className={`h-[62px] w-full rounded-[22px] border-2 border-white bg-white/25 px-6 font-[Arial] text-[24px] text-white outline-none placeholder:text-white focus:border-white focus:ring-2 focus:ring-white/40 ${estilos}`}
+      className={`h-[62px] w-full rounded-[22px] border-2 border-white bg-white/25 px-6 font-[Arial] text-[24px] text-white outline-none placeholder:text-white focus:border-white focus:ring-2 focus:ring-white/40 disabled:cursor-not-allowed disabled:opacity-70 ${estilos}`}
     />
   );
 }

@@ -12,11 +12,15 @@ type HistoriaFormulario = {
 type FormularioHistoriaCompProps = {
   onSubirHistoria?: (historia: HistoriaFormulario) => void;
   onCancelar?: () => void;
+  enviando?: boolean;
+  error?: string;
 };
 
 function FormularioHistoriaComp({
   onSubirHistoria,
   onCancelar,
+  enviando = false,
+  error = "",
 }: FormularioHistoriaCompProps) {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -46,6 +50,7 @@ function FormularioHistoriaComp({
         type="file"
         accept="image/*"
         multiple
+        disabled={enviando}
         className="hidden"
         onChange={mostrarImagenes}
       />
@@ -53,6 +58,7 @@ function FormularioHistoriaComp({
       <button
         type="button"
         onClick={abrirSelectorImagenes}
+        disabled={enviando}
         className="mx-auto block w-[88%] rounded-[28px] border-2 border-dashed border-[#006f6c] px-4 py-2 text-center text-[15px] font-bold text-[#006f6c]"
       >
         Seleccionar imagenes
@@ -78,6 +84,8 @@ function FormularioHistoriaComp({
         type="text"
         value={titulo}
         onChange={(event) => setTitulo(event.target.value)}
+        maxLength={200}
+        disabled={enviando}
         className="mt-2 h-9 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-[#006f6c] outline-none focus:border-[#006f6c] focus:ring-2 focus:ring-[#006f6c]/20"
       />
 
@@ -87,19 +95,28 @@ function FormularioHistoriaComp({
       <textarea
         value={descripcion}
         onChange={(event) => setDescripcion(event.target.value)}
+        disabled={enviando}
         className="mt-2 min-h-[180px] w-full resize-none rounded-md border border-gray-300 bg-gray-50 p-3 text-[#006f6c] outline-none focus:border-[#006f6c] focus:ring-2 focus:ring-[#006f6c]/20"
       />
 
+      {error && (
+        <p role="alert" className="mt-3 text-center text-[12px] text-red-600">
+          {error}
+        </p>
+      )}
+
       <div className="mx-auto mt-5 flex w-full max-w-[230px] flex-col gap-3">
         <BtnBlanco
-          informacion="Subir Historia"
+          informacion={enviando ? "Publicando..." : "Subir Historia"}
           estilos="!min-h-9 !rounded-full !px-4 !py-2 !text-sm leading-none"
           onClick={subirHistoria}
+          deshabilitado={enviando}
         />
         <BtnVerde
           informacion="Cancelar"
           estilos="!min-h-8 !rounded-full !bg-[#dce9e9] !px-4 !py-2 !text-sm leading-none"
           onClick={cancelarFormulario}
+          deshabilitado={enviando}
         />
       </div>
     </section>
@@ -107,3 +124,4 @@ function FormularioHistoriaComp({
 }
 
 export default FormularioHistoriaComp;
+export type { HistoriaFormulario };

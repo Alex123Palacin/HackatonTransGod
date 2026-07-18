@@ -4,7 +4,7 @@ type EstadoAve = "encontrada" | "noEncontrada" | "desconocido";
 
 type CartillaAveProps = {
   estado: EstadoAve;
-  imagenUrl: string;
+  imagenUrl: string | null;
   nombre?: string;
   fecha?: string;
   onClick?: () => void;
@@ -23,13 +23,17 @@ function CartillaAve({
   const contenido = (
     <>
       <div className="relative h-[102px] w-full overflow-hidden">
-        <img
-          src={imagenUrl}
-          alt={nombre ?? "Ave desconocida"}
-          className={`h-full w-full object-cover ${
-            estado === "noEncontrada" ? "grayscale opacity-60" : ""
-          }`}
-        />
+        {imagenUrl ? (
+          <img
+            src={imagenUrl}
+            alt={nombre ?? "Ave desconocida"}
+            className={`h-full w-full object-cover ${
+              estado === "noEncontrada" ? "grayscale opacity-60" : ""
+            }`}
+          />
+        ) : (
+          <div className="h-full w-full bg-gray-300" aria-hidden="true" />
+        )}
 
         {!esDesconocido && (
           <span

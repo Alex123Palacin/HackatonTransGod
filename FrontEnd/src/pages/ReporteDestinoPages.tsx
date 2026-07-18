@@ -1,6 +1,9 @@
-import { FaClipboardCheck, FaExclamationCircle, FaRegFileAlt } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import AdaptadoMobil from "../components/AdaptadoMobil";
+import FormularioReporteComp from "../components/FormularioReporteComp";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MiniReporteComp from "../components/MiniReporteComp";
+import { useReportes } from "../hooks/usarReportes";
 import { FlechitaRetrocede } from "../ui/BotonUi";
 
 function ReportarPages() {
@@ -20,32 +23,7 @@ function ReportarPages() {
             </div>
           </header>
 
-          <section className="rounded-[18px] bg-white px-4 py-4 shadow-sm">
-            <label className="text-[12px] font-bold text-[#006f6c]">
-              Tipo de problema
-            </label>
-            <input
-              type="text"
-              placeholder="Ejemplo: limpieza, queja o seguridad"
-              className="mt-2 h-11 w-full rounded-xl border border-gray-200 px-3 text-[12px] outline-none"
-            />
-
-            <label className="mt-4 block text-[12px] font-bold text-[#006f6c]">
-              Descripcion
-            </label>
-            <textarea
-              placeholder="Describe brevemente el problema..."
-              className="mt-2 h-36 w-full resize-none rounded-xl border border-gray-200 px-3 py-3 text-[12px] outline-none"
-            />
-
-            <button
-              type="button"
-              className="mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-[#006f6c] text-[13px] font-bold text-white"
-            >
-              <FaRegFileAlt />
-              Enviar reporte
-            </button>
-          </section>
+          <FormularioReporteComp />
         </main>
 
         <MenuModulosComp />
@@ -55,6 +33,8 @@ function ReportarPages() {
 }
 
 function VerReportesPages() {
+  const { reportes, cargando, error, cargarReportes } = useReportes();
+
   return (
     <AdaptadoMobil>
       <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
@@ -66,22 +46,36 @@ function VerReportesPages() {
             </h1>
           </header>
 
-          {["En revision", "Recibido", "Atendido"].map((estado, index) => (
-            <article
-              key={estado}
-              className="flex items-center gap-3 rounded-[16px] bg-white px-4 py-4 shadow-sm"
-            >
-              <FaClipboardCheck className="h-8 w-8 shrink-0 text-[#006f6c]" />
-              <div className="min-w-0">
-                <h2 className="text-[13px] font-bold text-[#006f6c]">
-                  Reporte #{index + 1}
-                </h2>
-                <p className="text-[11px] leading-4 text-slate-500">
-                  Estado actual: {estado}
-                </p>
-              </div>
-            </article>
-          ))}
+          {cargando && (
+            <p className="py-8 text-center text-[12px] text-slate-500">
+              Cargando tus reportes...
+            </p>
+          )}
+
+          {!cargando && error && (
+            <div className="rounded-[16px] bg-white px-4 py-5 text-center shadow-sm">
+              <p className="text-[12px] text-red-600">{error}</p>
+              <button
+                type="button"
+                onClick={() => void cargarReportes()}
+                className="mt-3 text-[12px] font-bold text-[#006f6c]"
+              >
+                Volver a intentar
+              </button>
+            </div>
+          )}
+
+          {!cargando && !error && reportes.length === 0 && (
+            <p className="rounded-[16px] bg-white px-4 py-8 text-center text-[12px] text-slate-500 shadow-sm">
+              Aun no has enviado reportes.
+            </p>
+          )}
+
+          {!cargando &&
+            !error &&
+            reportes.map((reporte) => (
+              <MiniReporteComp key={reporte.id_reporte} reporte={reporte} />
+            ))}
         </main>
 
         <MenuModulosComp />

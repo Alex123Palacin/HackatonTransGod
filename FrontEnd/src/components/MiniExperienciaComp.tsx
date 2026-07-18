@@ -1,13 +1,13 @@
 type MiniExperienciaCompProps = {
-  titulo?: string;
-  descripcion?: string;
-  imagenes?: string[];
+  titulo: string;
+  descripcion: string;
+  imagenes: string[];
 };
 
 function MiniExperienciaComp({
-  titulo = "Un dia en familia",
-  descripcion = "Disfrutamos de una tranquila caminata junto al mar, rodeados de naturaleza y compartiendo un momento especial en familia.",
-  imagenes = [],
+  titulo,
+  descripcion,
+  imagenes,
 }: MiniExperienciaCompProps) {
   const imagenesMostradas = imagenes.slice(0, 3);
   const imagenesExtra = Math.max(imagenes.length - 3, 0);
