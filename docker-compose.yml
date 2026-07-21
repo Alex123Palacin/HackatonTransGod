@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD es obligatoria}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - poza_postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
       interval: 10s
@@ -25,7 +25,7 @@ services:
       OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-1}
       OLLAMA_MAX_LOADED_MODELS: ${OLLAMA_MAX_LOADED_MODELS:-1}
     volumes:
-      - ollama_data:/root/.ollama
+      - poza_ollama_data:/root/.ollama
     expose:
       - "11434"
     healthcheck:
@@ -45,7 +45,7 @@ services:
     entrypoint: ["ollama"]
     command: ["pull", "${OLLAMA_MODELO_GUIA:-deepseek-r1:8b}"]
     volumes:
-      - ollama_data:/root/.ollama
+      - poza_ollama_data:/root/.ollama
     depends_on:
       ollama:
         condition: service_healthy
@@ -96,8 +96,8 @@ services:
       OLLAMA_TIMEOUT_SEGUNDOS: ${OLLAMA_TIMEOUT_SEGUNDOS:-180}
       OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-2m}
     volumes:
-      - django_static:/app/staticfiles
-      - django_media:/app/media
+      - poza_django_static:/app/staticfiles
+      - poza_django_media:/app/media
     expose:
       - "8000"
     depends_on:
@@ -122,8 +122,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - django_static:/srv/django/static:ro
-      - django_media:/srv/django/media:ro
+      - poza_django_static:/srv/django/static:ro
+      - poza_django_media:/srv/django/media:ro
     expose:
       - "80"
     depends_on:
@@ -139,10 +139,10 @@ services:
       - aplicacion
 
 volumes:
-  postgres_data:
-  ollama_data:
-  django_static:
-  django_media:
+  poza_postgres_data:
+  poza_ollama_data:
+  poza_django_static:
+  poza_django_media:
 
 networks:
   aplicacion:
