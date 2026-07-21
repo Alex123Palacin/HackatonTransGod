@@ -16,7 +16,7 @@ const limitesLaPunta = L.latLngBounds(
 const lugares = [
   {
     numero: 1,
-    titulo: "Malecón Wiese",
+    titulo: "Malecón Wiese de alex",
     coordenadas: [-12.07074, -77.15954] as [number, number],
     descripcion: "Mirador costero ideal para observar aves marinas y contemplar la bahía de La Punta. Es un punto recomendado para disfrutar del paisaje, tomar fotografías y conectarse con la naturaleza.",
     imagenes: [
