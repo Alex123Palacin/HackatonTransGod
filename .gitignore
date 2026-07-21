@@ -37,12 +37,24 @@ staticfiles/
 
 # variables de entorno 
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+!**/.env.example
+!.env.docker.example
 
 # Archivos ocultos 
 .DS_Store
 Thumbs.db
 agent/
+
+# Respaldos de base de datos: contienen informacion sensible
+*.dump
+*.sql
+
+# La infraestructura Docker siempre debe versionarse
+!Dockerfile
+!**/Dockerfile
+!docker-compose.yml
+!docker-compose.local.yml
+!**/.dockerignore
+!**/docker/**

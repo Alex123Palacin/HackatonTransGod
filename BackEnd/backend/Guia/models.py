@@ -33,6 +33,7 @@ class Mensaje(models.Model):
     )
     emisor = models.CharField(max_length=10, choices=Emisor.choices)
     mensaje = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         verbose_name = "mensaje"

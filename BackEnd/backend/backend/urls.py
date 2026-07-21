@@ -17,13 +17,20 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import include, path
 
+
+def estado_servicio(_request):
+    return JsonResponse({'status': 'ok'})
+
 urlpatterns = [
+    path('api/health/', estado_servicio, name='estado_servicio'),
     path('admin/', admin.site.urls),
     path('api/auth/', include('Usuario.urls')),
     path('api/noticias/', include('Noticias.urls')),
     path('api/catalogo/', include('Catalogo.urls')),
+    path('api/guia/', include('Guia.urls')),
 ]
 
 if settings.DEBUG:

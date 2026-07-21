@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,20 +22,64 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e@mc(y6(^v%w%!!o%lkejvds=b8nwiikqe_zdo!7y!-5@7otxi'
+def variable_booleana(nombre, predeterminado=False):
+    valor = os.getenv(nombre)
+    if valor is None:
+        return predeterminado
+    return valor.strip().lower() in {"1", "true", "yes", "si", "on"}
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        'DJANGO_ALLOWED_HOSTS',
-        'localhost,127.0.0.1,testserver',
-    ).split(',')
-    if host.strip()
-]
+def variable_lista(nombre, predeterminado=""):
+    return [
+        valor.strip()
+        for valor in os.getenv(nombre, predeterminado).split(",")
+        if valor.strip()
+    ]
+
+
+DEBUG = variable_booleana("DJANGO_DEBUG", True)
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured(
+            "DJANGO_SECRET_KEY es obligatoria cuando DJANGO_DEBUG=False."
+        )
+    SECRET_KEY = "django-insecure-solo-desarrollo-hackaton-trans-god"
+
+ALLOWED_HOSTS = variable_lista(
+    "DJANGO_ALLOWED_HOSTS",
+    "localhost,127.0.0.1,testserver",
+)
+
+CSRF_TRUSTED_ORIGINS = variable_lista(
+    "CSRF_TRUSTED_ORIGINS",
+    "http://localhost:8080,http://127.0.0.1:8080",
+)
+
+CORS_ALLOWED_ORIGINS = variable_lista(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080,http://127.0.0.1:8080",
+)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+SECURE_SSL_REDIRECT = variable_booleana(
+    "DJANGO_SECURE_SSL_REDIRECT",
+    not DEBUG,
+)
+SESSION_COOKIE_SECURE = variable_booleana(
+    "DJANGO_SECURE_COOKIES",
+    not DEBUG,
+)
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE
+SECURE_HSTS_SECONDS = int(os.getenv("DJANGO_HSTS_SECONDS", "0"))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = variable_booleana(
+    "DJANGO_HSTS_INCLUDE_SUBDOMAINS",
+    False,
+)
+SECURE_HSTS_PRELOAD = variable_booleana("DJANGO_HSTS_PRELOAD", False)
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
 
 
 # Application definition
@@ -97,6 +143,8 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin'),
         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
+        'CONN_MAX_AGE': int(os.getenv('POSTGRES_CONN_MAX_AGE', '60')),
+        'CONN_HEALTH_CHECKS': True,
     }
 }
 
@@ -114,16 +162,6 @@ REST_FRAMEWORK = {
 SESION_INACTIVIDAD_MINUTOS = int(
     os.getenv("SESION_INACTIVIDAD_MINUTOS", "30")
 )
-
-CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        'CORS_ALLOWED_ORIGINS',
-        'http://localhost:5173,http://127.0.0.1:5173',
-    ).split(',')
-    if origin.strip()
-]
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -159,7 +197,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

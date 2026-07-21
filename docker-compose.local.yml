@@ -1,0 +1,12 @@
+services:
+  frontend:
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:80"
+
+  db:
+    ports:
+      - "127.0.0.1:${POSTGRES_LOCAL_PORT:-5433}:5432"
+
+  ollama:
+    ports:
+      - "127.0.0.1:${OLLAMA_LOCAL_PORT:-11435}:11434"

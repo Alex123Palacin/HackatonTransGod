@@ -1,0 +1,149 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-BaseDatosPozoArenilla}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD es obligatoria}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - aplicacion
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    environment:
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-2m}
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-1}
+      OLLAMA_MAX_LOADED_MODELS: ${OLLAMA_MAX_LOADED_MODELS:-1}
+    volumes:
+      - ollama_data:/root/.ollama
+    expose:
+      - "11434"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    networks:
+      - aplicacion
+
+  ollama-init:
+    image: ollama/ollama:latest
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["ollama"]
+    command: ["pull", "${OLLAMA_MODELO_GUIA:-deepseek-r1:8b}"]
+    volumes:
+      - ollama_data:/root/.ollama
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - aplicacion
+
+  backend:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command:
+      - gunicorn
+      - backend.wsgi:application
+      - --bind
+      - 0.0.0.0:8000
+      - --workers
+      - ${GUNICORN_WORKERS:-2}
+      - --timeout
+      - ${GUNICORN_TIMEOUT:-240}
+      - --access-logfile
+      - "-"
+      - --error-logfile
+      - "-"
+    environment:
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-False}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY es obligatoria}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-davidlent.shop,www.davidlent.shop,localhost,127.0.0.1}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://davidlent.shop,https://www.davidlent.shop}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-https://davidlent.shop,https://www.davidlent.shop}
+      DJANGO_SECURE_SSL_REDIRECT: ${DJANGO_SECURE_SSL_REDIRECT:-True}
+      DJANGO_SECURE_COOKIES: ${DJANGO_SECURE_COOKIES:-True}
+      DJANGO_HSTS_SECONDS: ${DJANGO_HSTS_SECONDS:-3600}
+      DJANGO_HSTS_INCLUDE_SUBDOMAINS: ${DJANGO_HSTS_INCLUDE_SUBDOMAINS:-False}
+      DJANGO_HSTS_PRELOAD: ${DJANGO_HSTS_PRELOAD:-False}
+      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL:-}
+      DJANGO_SUPERUSER_NAME: ${DJANGO_SUPERUSER_NAME:-}
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD:-}
+      POSTGRES_DB: ${POSTGRES_DB:-BaseDatosPozoArenilla}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD es obligatoria}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_CONN_MAX_AGE: ${POSTGRES_CONN_MAX_AGE:-60}
+      SESION_INACTIVIDAD_MINUTOS: ${SESION_INACTIVIDAD_MINUTOS:-30}
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODELO_GUIA: ${OLLAMA_MODELO_GUIA:-deepseek-r1:8b}
+      OLLAMA_TIMEOUT_SEGUNDOS: ${OLLAMA_TIMEOUT_SEGUNDOS:-180}
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-2m}
+    volumes:
+      - django_static:/app/staticfiles
+      - django_media:/app/media
+    expose:
+      - "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; r=urllib.request.Request('http://127.0.0.1:8000/api/health/', headers={'X-Forwarded-Proto':'https'}); urllib.request.urlopen(r, timeout=5)"
+      interval: 15s
+      timeout: 8s
+      retries: 10
+      start_period: 30s
+    networks:
+      - aplicacion
+
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - django_static:/srv/django/static:ro
+      - django_media:/srv/django/media:ro
+    expose:
+      - "80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/health >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - aplicacion
+
+volumes:
+  postgres_data:
+  ollama_data:
+  django_static:
+  django_media:
+
+networks:
+  aplicacion:
+    driver: bridge
