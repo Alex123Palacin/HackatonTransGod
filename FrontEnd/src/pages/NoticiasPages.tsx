@@ -1,6 +1,7 @@
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import { useLocation } from "react-router-dom";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MenuPerfilComp from "../components/MenuPerfilComp";
 import { useCambiarSecionNoticia } from "../hooks/cambiarsecionNoticia";
 import { BtnBlanco, BtnVerde } from "../ui/BotonUi";
 import PaginaComunicado from "./PaginaComunicado";
@@ -25,8 +26,13 @@ function NoticiasPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
-        <div className="grid grid-cols-3 gap-2 px-4 pb-3 pt-6">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+        <header className="flex items-center justify-between px-4 pt-4">
+          <h1 className="text-[19px] font-bold text-[#006f6c]">Noticias</h1>
+          <MenuPerfilComp />
+        </header>
+
+        <div className="grid grid-cols-3 gap-2 px-4 pb-3 pt-2">
           {pestañas.map((pestaña) => {
             const activo = secionActiva === pestaña.id;
             const Boton = activo ? BtnBlanco : BtnVerde;

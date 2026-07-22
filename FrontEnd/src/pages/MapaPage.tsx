@@ -4,6 +4,7 @@ import L from "leaflet";
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import DescripcionLugarComp from "../components/DescripcionLugarComp";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MenuPerfilComp from "../components/MenuPerfilComp";
 import { useRedireccion } from "../hooks/redireccion";
 
 import "leaflet/dist/leaflet.css";
@@ -97,7 +98,10 @@ function MapaPage() {
 
   return (
     <AdaptadoMobil>
-      <div className="w-full relative overflow-hidden h-[340px] border-b border-gray-100 z-10">
+      <div className="relative z-10 h-[400px] w-full shrink-0 overflow-hidden border-b border-gray-100">
+        <div className="absolute right-3 top-3 z-[1000]">
+          <MenuPerfilComp />
+        </div>
         <MapContainer
           center={[-12.0715, -77.1610]} 
           zoom={16}
@@ -129,7 +133,7 @@ function MapaPage() {
       </div>
 
       {lugarSeleccionado && (
-        <div className="w-full flex flex-col items-center px-4 mt-4 pb-16 box-border">
+        <div className="relative z-20 -mt-5 flex w-full flex-col items-center px-4 pb-16 box-border">
           <div className="w-full max-w-md flex flex-col items-center">
             <DescripcionLugarComp
               numero={lugarSeleccionado.numero}

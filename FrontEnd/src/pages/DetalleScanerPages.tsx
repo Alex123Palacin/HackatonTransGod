@@ -165,7 +165,7 @@ function DetalleScanerPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="relative flex min-h-screen flex-col overflow-hidden bg-white [overflow-wrap:normal] [word-break:normal]">
+      <section className="relative flex min-h-full flex-col overflow-hidden bg-white [overflow-wrap:normal] [word-break:normal]">
         <main className="relative flex flex-1 flex-col overflow-hidden">
           
           <div 

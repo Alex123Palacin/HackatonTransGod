@@ -1,6 +1,7 @@
 import ImagenInicioPozo from "../assets/ImagenInicioPozo.png";
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MenuPerfilComp from "../components/MenuPerfilComp";
 import PasosInicio from "../components/PasosInicio";
 import { useRedireccion } from "../hooks/redireccion";
 import { BtnBlanco, BtnVerde } from "../ui/BotonUi";
@@ -11,9 +12,13 @@ function InicioPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+        <header className="flex justify-end px-5 pt-4">
+          <MenuPerfilComp />
+        </header>
+
         <div
-          className="mx-5 mt-5 rounded-[22px] bg-cover bg-center px-5 pb-4 pt-44 text-white shadow-md [overflow-wrap:normal] [word-break:normal]"
+          className="mx-5 mt-2 rounded-[22px] bg-cover bg-center px-5 pb-4 pt-44 text-white shadow-md [overflow-wrap:normal] [word-break:normal]"
           style={{ backgroundImage: `url(${ImagenInicioPozo})` }}
         >
           <span className="inline-flex rounded-full border border-white bg-black/10 px-3 py-1 text-[13px] font-bold text-white shadow-sm [overflow-wrap:normal] [word-break:normal]">

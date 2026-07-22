@@ -1,5 +1,6 @@
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MenuPerfilComp from "../components/MenuPerfilComp";
 import PorcentajeAveComp from "../components/porcentajeAveComp";
 import VistaAnimalComp from "../components/vistanimalComp";
 import type { AveDesconocida } from "../components/secicionDesconocidos";
@@ -41,11 +42,14 @@ function CatalogoPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
         <main className="flex flex-1 flex-col gap-4 px-3 py-5">
-          <h1 className="px-2 text-[18px] font-bold text-[#006f6c]">
-            Mi Catalogo
-          </h1>
+          <header className="flex items-center justify-between px-2">
+            <h1 className="text-[18px] font-bold text-[#006f6c]">
+              Mi Catalogo
+            </h1>
+            <MenuPerfilComp />
+          </header>
 
           <PorcentajeAveComp
             encontradas={resumen.encontradas}

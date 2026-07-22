@@ -29,7 +29,7 @@ function DescripcionAvePages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
         <main className="flex flex-1 flex-col gap-3 px-3 py-3">
           {cargando && (
             <p className="py-12 text-center text-[12px] text-slate-500">

@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { BtnBlanco } from "../ui/BotonUi";
+import VisorImagenesComp from "./VisorImagenesComp";
 
 type MiniComunicadoCompProps = {
   categoria?: string;
@@ -15,6 +17,8 @@ function MiniComunicadoComp({
   imagenUrl,
   onVer,
 }: MiniComunicadoCompProps) {
+  const [imagenAbierta, setImagenAbierta] = useState(false);
+
   return (
     <article className="grid w-full max-w-full grid-cols-[1fr_88px] gap-3 rounded-xl border border-gray-400 bg-white p-3 font-[Arial] shadow-sm [overflow-wrap:normal] [word-break:normal]">
       <div className="flex min-w-0 flex-col">
@@ -26,11 +30,18 @@ function MiniComunicadoComp({
       </div>
 
       {imagenUrl ? (
-        <img
-          src={imagenUrl}
-          alt={titulo}
-          className="h-[88px] w-[88px] rounded-sm object-cover"
-        />
+        <button
+          type="button"
+          onClick={() => setImagenAbierta(true)}
+          className="group h-[88px] w-[88px] cursor-zoom-in overflow-hidden rounded-md bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#006f6c]"
+          aria-label={`Ampliar imagen de ${titulo}`}
+        >
+          <img
+            src={imagenUrl}
+            alt={titulo}
+            className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+          />
+        </button>
       ) : (
         <div className="h-[88px] w-[88px] rounded-sm bg-gray-300" />
       )}
@@ -42,6 +53,13 @@ function MiniComunicadoComp({
           onClick={onVer}
         />
       </div>
+
+      <VisorImagenesComp
+        abierto={imagenAbierta}
+        imagenes={imagenUrl ? [imagenUrl] : []}
+        titulo={titulo}
+        onCerrar={() => setImagenAbierta(false)}
+      />
     </article>
   );
 }

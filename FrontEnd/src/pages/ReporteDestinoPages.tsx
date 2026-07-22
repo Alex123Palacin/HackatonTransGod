@@ -9,7 +9,7 @@ import { FlechitaRetrocede } from "../ui/BotonUi";
 function ReportarPages() {
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
         <main className="flex flex-1 flex-col gap-4 px-5 py-6">
           <header className="flex items-center gap-3">
             <FlechitaRetrocede ruta="/noticias" />
@@ -37,7 +37,7 @@ function VerReportesPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
         <main className="flex flex-1 flex-col gap-4 px-5 py-6">
           <header className="flex items-center gap-3">
             <FlechitaRetrocede ruta="/noticias" />
@@ -87,7 +87,7 @@ function VerReportesPages() {
 function QuejasReportePages() {
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
         <main className="flex flex-1 flex-col gap-4 px-5 py-6">
           <header className="flex items-center gap-3">
             <FlechitaRetrocede ruta="/noticias" />

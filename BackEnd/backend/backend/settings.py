@@ -53,13 +53,14 @@ ALLOWED_HOSTS = variable_lista(
 
 CSRF_TRUSTED_ORIGINS = variable_lista(
     "CSRF_TRUSTED_ORIGINS",
-    "http://localhost:8080,http://127.0.0.1:8080",
+    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080,http://127.0.0.1:8080",
 )
 
 CORS_ALLOWED_ORIGINS = variable_lista(
     "CORS_ALLOWED_ORIGINS",
     "http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080,http://127.0.0.1:8080",
 )
+CORS_ALLOW_CREDENTIALS = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
@@ -99,6 +100,7 @@ INSTALLED_APPS = [
     'Catalogo.apps.CatalogoConfig',
     'Noticias.apps.NoticiasConfig',
     'Mapa.apps.MapaConfig',
+    'Administracion.apps.AdministracionConfig',
 ]
 
 MIDDLEWARE = [
@@ -157,11 +159,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_THROTTLE_RATES': {
+        'admin_login': '10/min',
+    },
 }
 
 SESION_INACTIVIDAD_MINUTOS = int(
     os.getenv("SESION_INACTIVIDAD_MINUTOS", "30")
 )
+ADMIN_SESION_INACTIVIDAD_MINUTOS = int(
+    os.getenv("ADMIN_SESION_INACTIVIDAD_MINUTOS", "30")
+)
+
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

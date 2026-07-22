@@ -10,6 +10,7 @@ import IndicadorEscribiendoComp from "../components/IndicadorEscribiendoComp";
 import MensajeIaComp from "../components/MensajeIaComp";
 import MensajeUsuarioComp from "../components/MensajeUsuarioComp";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MenuPerfilComp from "../components/MenuPerfilComp";
 import { useChatGuia } from "../hooks/usarChatGuia";
 import { useTextoAVoz } from "../hooks/usarTextoAVoz";
 import { useTranscripcionVoz } from "../hooks/usarTranscripcionVoz";
@@ -70,7 +71,7 @@ function GuiaPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex h-screen min-h-0 flex-col bg-white [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex h-full min-h-0 flex-col bg-white [overflow-wrap:normal] [word-break:normal]">
         <header className="flex shrink-0 items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
             <FlechitaRetrocede ruta="/Inicio" estilos="!shadow-sm" />
@@ -85,23 +86,26 @@ function GuiaPages() {
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (sonidoActivo) detenerLectura();
-              setSonidoActivo((activo) => !activo);
-            }}
-            className={`relative flex h-9 w-9 items-center justify-center rounded-full bg-[#edf5f2] text-[#006f6c] ${
-              hablando ? "animate-pulse" : ""
-            }`}
-            aria-label={sonidoActivo ? "Desactivar sonido" : "Activar sonido"}
-            aria-pressed={sonidoActivo}
-          >
-            <FaVolumeUp className="h-4 w-4" />
-            {!sonidoActivo && (
-              <span className="absolute h-[2px] w-6 rotate-45 rounded-full bg-[#006f6c]" />
-            )}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (sonidoActivo) detenerLectura();
+                setSonidoActivo((activo) => !activo);
+              }}
+              className={`relative flex h-9 w-9 items-center justify-center rounded-full bg-[#edf5f2] text-[#006f6c] ${
+                hablando ? "animate-pulse" : ""
+              }`}
+              aria-label={sonidoActivo ? "Desactivar sonido" : "Activar sonido"}
+              aria-pressed={sonidoActivo}
+            >
+              <FaVolumeUp className="h-4 w-4" />
+              {!sonidoActivo && (
+                <span className="absolute h-[2px] w-6 rotate-45 rounded-full bg-[#006f6c]" />
+              )}
+            </button>
+            <MenuPerfilComp />
+          </div>
         </header>
 
         <main className="flex min-h-0 flex-1 flex-col px-4 pb-3">

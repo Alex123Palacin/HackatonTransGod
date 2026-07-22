@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/noticias/', include('Noticias.urls')),
     path('api/catalogo/', include('Catalogo.urls')),
     path('api/guia/', include('Guia.urls')),
+    path('api/adminmodulos/', include('Administracion.urls')),
 ]
 
 if settings.DEBUG:

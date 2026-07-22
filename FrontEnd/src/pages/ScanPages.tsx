@@ -3,6 +3,7 @@ import type { ChangeEvent } from "react";
 import { FaBolt, FaCamera, FaImage, FaRedoAlt, FaTimes } from "react-icons/fa";
 import AdaptadoMobil from "../components/AdaptadoMobil";
 import MenuModulosComp from "../components/MenuModulosComp";
+import MenuPerfilComp from "../components/MenuPerfilComp";
 import { useCamara } from "../hooks/usarCamara";
 import { useRedireccion } from "../hooks/redireccion";
 
@@ -78,7 +79,7 @@ function ScanPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="relative flex h-screen w-full flex-col overflow-hidden bg-[#10282b]">
+      <section className="relative flex h-full w-full flex-col overflow-hidden bg-[#10282b]">
         <canvas ref={canvasRef} className="hidden" />
         <input
           ref={fileInputRef}
@@ -145,19 +146,22 @@ function ScanPages() {
             <span className="rounded-full bg-[#006f6c] px-5 py-2 text-[12px] font-bold text-white shadow-md">
               Escanea un ave
             </span>
-            <button
-              type="button"
-              onClick={() => setFlashActivo((activo) => !activo)}
-              className={`flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
-                flashActivo
-                  ? "border-yellow-500 bg-yellow-400 text-black"
-                  : "border-white/60 bg-black/30 text-white"
-              }`}
-              aria-label={flashActivo ? "Desactivar flash" : "Activar flash"}
-              aria-pressed={flashActivo}
-            >
-              <FaBolt />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setFlashActivo((activo) => !activo)}
+                className={`flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+                  flashActivo
+                    ? "border-yellow-500 bg-yellow-400 text-black"
+                    : "border-white/60 bg-black/30 text-white"
+                }`}
+                aria-label={flashActivo ? "Desactivar flash" : "Activar flash"}
+                aria-pressed={flashActivo}
+              >
+                <FaBolt />
+              </button>
+              <MenuPerfilComp />
+            </div>
           </header>
 
           {camaraActiva && (

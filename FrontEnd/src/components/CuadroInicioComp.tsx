@@ -39,8 +39,8 @@ function CuadroInicioComp() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-[360px] rounded-[20px] border-2 border-white bg-[#b9c4c5]/70 px-4 py-4 shadow-md backdrop-blur-[2px]">
-      <form className="flex flex-col gap-3" onSubmit={enviarLogin}>
+    <section className="mx-auto w-full max-w-[340px] rounded-2xl border-2 border-white bg-[#b9c4c5]/70 px-3.5 py-3.5 shadow-md backdrop-blur-[2px]">
+      <form className="flex flex-col gap-2.5" onSubmit={enviarLogin}>
         {estado?.cuentaCreada && !error && (
           <p
             role="status"
@@ -60,18 +60,18 @@ function CuadroInicioComp() {
           requerido
           deshabilitado={enviando}
           longitudMaxima={254}
-          estilos="h-10 rounded-xl px-4 text-sm"
+          estilos="!h-9 !rounded-xl !px-3 !text-[13px]"
         />
         <InputLogin
           tipo="password"
           nombre="password"
-          informacion="********"
+          informacion="Ingresa tu contrasena"
           valor={password}
           onChange={setPassword}
           autoComplete="current-password"
           requerido
           deshabilitado={enviando}
-          estilos="h-10 rounded-xl px-4 text-sm"
+          estilos="!h-9 !rounded-xl !px-3 !text-[13px]"
         />
 
         {error && (
@@ -88,12 +88,12 @@ function CuadroInicioComp() {
           informacion={enviando ? "Ingresando..." : "Iniciar Sesion"}
           tipo="submit"
           deshabilitado={enviando}
-          estilos="min-h-10 rounded-xl py-2 text-base"
+          estilos="!min-h-9 !rounded-xl !px-4 !py-2 !text-sm !leading-none"
         />
         <BtnVerde
           informacion="Registrarme"
           deshabilitado={enviando}
-          estilos="min-h-10 rounded-xl py-2 text-base"
+          estilos="!min-h-9 !rounded-xl !px-4 !py-2 !text-sm !leading-none"
           onClick={() => navigate("/registro")}
         />
       </form>

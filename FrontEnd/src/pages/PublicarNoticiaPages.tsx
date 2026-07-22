@@ -10,7 +10,7 @@ function PublicarNoticiaPages() {
 
   return (
     <AdaptadoMobil>
-      <section className="flex min-h-screen flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
+      <section className="flex min-h-full flex-col bg-[#dbeee8] [overflow-wrap:normal] [word-break:normal]">
         <main className="flex flex-1 flex-col px-6 pb-7 pt-8 [overflow-wrap:normal] [word-break:normal]">
           <h1 className="text-[20px] font-bold text-[#006f6c] [overflow-wrap:normal] [word-break:normal]">
             Publicar historia

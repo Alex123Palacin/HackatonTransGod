@@ -1,9 +1,12 @@
+import { useState } from "react";
 import MiniComunicadoComp from "../components/MiniComunicadoComp";
+import VisorImagenesComp from "../components/VisorImagenesComp";
 import { useComunicados } from "../hooks/usarComunicados";
 import { BtnBlanco, BtnVerde } from "../ui/BotonUi";
 
 
 function PaginaComunicado() {
+  const [imagenDetalleAbierta, setImagenDetalleAbierta] = useState(false);
   const {
     comunicados,
     comunicadoSeleccionado,
@@ -60,11 +63,18 @@ function PaginaComunicado() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-5">
           <article className="w-full max-w-[360px] rounded-xl bg-white p-4 font-[Arial] shadow-xl">
             {comunicadoSeleccionado.imagenUrl && (
-              <img
-                src={comunicadoSeleccionado.imagenUrl}
-                alt={comunicadoSeleccionado.titulo}
-                className="h-40 w-full rounded-md object-cover"
-              />
+              <button
+                type="button"
+                onClick={() => setImagenDetalleAbierta(true)}
+                className="group h-40 w-full cursor-zoom-in overflow-hidden rounded-md bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#006f6c]"
+                aria-label={`Ampliar imagen de ${comunicadoSeleccionado.titulo}`}
+              >
+                <img
+                  src={comunicadoSeleccionado.imagenUrl}
+                  alt={comunicadoSeleccionado.titulo}
+                  className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                />
+              </button>
             )}
             <span className="mt-4 block text-[10px] font-bold text-[#006f6c]">
               {comunicadoSeleccionado.categoria}
@@ -82,6 +92,17 @@ function PaginaComunicado() {
               informacion="Cerrar"
               estilos="mt-5 !min-h-9 !rounded-full !px-4 !py-2 !text-[13px]"
               onClick={cerrarComunicado}
+            />
+
+            <VisorImagenesComp
+              abierto={imagenDetalleAbierta}
+              imagenes={
+                comunicadoSeleccionado.imagenUrl
+                  ? [comunicadoSeleccionado.imagenUrl]
+                  : []
+              }
+              titulo={comunicadoSeleccionado.titulo}
+              onCerrar={() => setImagenDetalleAbierta(false)}
             />
           </article>
         </div>

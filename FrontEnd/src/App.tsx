@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Navigate, Routes, Route } from "react-router-dom";
 import './App.css';
 import RutaProtegida from './components/RutaProtegida';
@@ -18,6 +19,22 @@ import {
   VerReportesPages,
 } from './pages/ReporteDestinoPages';
 
+const SistemaAdminPages = lazy(
+  () => import('./pages/moduAdmin/SistemaAdminPages'),
+);
+
+function CargandoSistemaAdmin() {
+  return (
+    <div
+      role="status"
+      aria-label="Cargando sistema administrativo"
+      className="flex min-h-screen items-center justify-center bg-[#e9f3ef]"
+    >
+      <span className="h-10 w-10 animate-spin rounded-full border-4 border-[#cfe5df] border-t-[#006f6c]" />
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
@@ -25,6 +42,14 @@ function App() {
         <Route path='/' element={<Navigate to='/login' replace />} />
         <Route path='/login' element={<LoginIniciarPages />} />
         <Route path='/registro' element={<LoginRegistrarPages />} />
+        <Route
+          path='/sistemaadmin/*'
+          element={
+            <Suspense fallback={<CargandoSistemaAdmin />}>
+              <SistemaAdminPages />
+            </Suspense>
+          }
+        />
         <Route element={<RutaProtegida />}>
           <Route path='/Inicio' element={<InicioPages />} />
           <Route path='/guia' element={<GuiaPages />} />
