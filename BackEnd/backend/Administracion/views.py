@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
-from Catalogo.models import Ave, FotoAve
+from Catalogo.models import AtributoAve, Ave, FotoAve
 from Noticias.models import Comunicado, ImagenPublicacion, Publicacion, Reporte
 from Usuario.models import Usuario
 
@@ -195,7 +195,14 @@ class ListaCrearAvesView(VistaAdministrativaMixin, generics.ListCreateAPIView):
             Prefetch(
                 "fotos",
                 queryset=FotoAve.objects.order_by("-es_principal", "id_foto"),
-            )
+            ),
+            Prefetch(
+                "atributos",
+                queryset=AtributoAve.objects.select_related("atributo").order_by(
+                    "id_atributo_ave"
+                ),
+                to_attr="atributos_ordenados",
+            ),
         ).order_by("nombre")
 
     def get_serializer_class(self):
@@ -227,7 +234,14 @@ class DetalleAveAdministrativaView(
             Prefetch(
                 "fotos",
                 queryset=FotoAve.objects.order_by("-es_principal", "id_foto"),
-            )
+            ),
+            Prefetch(
+                "atributos",
+                queryset=AtributoAve.objects.select_related("atributo").order_by(
+                    "id_atributo_ave"
+                ),
+                to_attr="atributos_ordenados",
+            ),
         )
 
     def get_serializer_class(self):

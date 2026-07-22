@@ -9,7 +9,7 @@ from PIL import Image
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from Catalogo.models import Ave
+from Catalogo.models import AtributoAve, Ave
 from Noticias.models import Comunicado, ImagenPublicacion, Publicacion, Reporte
 from Usuario.models import CuentaAplicacion, Usuario
 
@@ -211,6 +211,11 @@ class AdministracionApiTests(APITestCase):
                 "etiqueta_caracteristica": "Caracteristicas",
                 "caracteristicas": "Ave de cuello largo.",
                 "descripcion": "Habita en humedales.",
+                "atributos": (
+                    '[{"nombre":"Tipo","valor":"Acuatica","destacado":true},'
+                    '{"nombre":"Habitat","valor":"Humedales y lagunas",'
+                    '"destacado":false}]'
+                ),
                 "imagenes": [
                     crear_imagen("garza-1.png"),
                     crear_imagen("garza-2.png", "gray"),
@@ -223,11 +228,19 @@ class AdministracionApiTests(APITestCase):
         ave = Ave.objects.get()
         self.assertEqual(ave.fotos.count(), 2)
         self.assertEqual(ave.fotos.filter(es_principal=True).count(), 1)
+        self.assertEqual(ave.atributos.count(), 2)
+        self.assertTrue(
+            AtributoAve.objects.get(atributo__nombre="Tipo").es_destacado
+        )
 
         editada = self.client.patch(
             reverse("administracion_api:detalle_ave", args=[ave.id_ave]),
             {
                 "descripcion": "Nueva descripcion.",
+                "atributos": (
+                    '[{"nombre":"Dato curioso","valor":"Permanece inmovil",'
+                    '"destacado":false}]'
+                ),
                 "reemplazar_imagenes": "true",
                 "imagenes": [crear_imagen("garza-nueva.png", "blue")],
             },
@@ -238,6 +251,11 @@ class AdministracionApiTests(APITestCase):
         ave.refresh_from_db()
         self.assertEqual(ave.descripcion, "Nueva descripcion.")
         self.assertEqual(ave.fotos.count(), 1)
+        self.assertEqual(ave.atributos.count(), 1)
+        self.assertEqual(
+            ave.atributos.select_related("atributo").get().atributo.nombre,
+            "Dato curioso",
+        )
 
     def test_admin_gestiona_reportes_y_publicaciones_de_todos_los_usuarios(self):
         reporte = Reporte.objects.create(

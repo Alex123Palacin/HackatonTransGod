@@ -72,6 +72,18 @@ function formularioAve(datos: NuevaAveAdmin, reemplazarImagenes = false) {
   formulario.append("etiqueta_caracteristica", datos.etiqueta.trim());
   formulario.append("caracteristicas", datos.caracteristicas.trim());
   formulario.append("descripcion", datos.descripcion.trim());
+  formulario.append(
+    "atributos",
+    JSON.stringify(
+      datos.atributos
+        .map((atributo) => ({
+          nombre: atributo.nombre.trim(),
+          valor: atributo.valor.trim(),
+          destacado: atributo.destacado,
+        }))
+        .filter((atributo) => atributo.nombre || atributo.valor),
+    ),
+  );
   datos.imagenes.forEach((imagen) => formulario.append("imagenes", imagen));
   if (reemplazarImagenes && datos.imagenes.length > 0) {
     formulario.append("reemplazar_imagenes", "true");

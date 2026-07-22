@@ -36,6 +36,13 @@ type ComunicadoAdmin = {
   activo: boolean;
 };
 
+type AtributoAveAdmin = {
+  id?: number;
+  nombre: string;
+  valor: string;
+  destacado: boolean;
+};
+
 type AveAdmin = {
   id: number;
   nombre: string;
@@ -45,6 +52,7 @@ type AveAdmin = {
   descripcion: string;
   imagenUrl: string;
   imagenes: string[];
+  atributos: AtributoAveAdmin[];
   activa: boolean;
 };
 
@@ -80,10 +88,12 @@ type NuevaAveAdmin = {
   etiqueta: string;
   caracteristicas: string;
   descripcion: string;
+  atributos: AtributoAveAdmin[];
   imagenes: File[];
 };
 
 export type {
+  AtributoAveAdmin,
   AveAdmin,
   ComunicadoAdmin,
   DatosAdmin,
